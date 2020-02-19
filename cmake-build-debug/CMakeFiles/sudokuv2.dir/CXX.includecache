@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/Cameron/ncsuDrive/Me/Projects/sudokuv2/main.cpp
+iostream
+-
+sudokuBoard.h
+C:/Users/Cameron/ncsuDrive/Me/Projects/sudokuv2/sudokuBoard.h
+
 C:/Users/Cameron/ncsuDrive/Me/Projects/sudokuv2/sudokuBoard.cpp
 sudokuBoard.h
 C:/Users/Cameron/ncsuDrive/Me/Projects/sudokuv2/sudokuBoard.h
@@ -16,5 +22,7 @@ iostream
 random
 -
 cfloat
+-
+ctime
 -
 
