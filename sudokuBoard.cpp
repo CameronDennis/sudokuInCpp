@@ -125,31 +125,31 @@ bool SudokuBoard::isPossible(short row, short col) {
     return false;
 }
 
-void SudokuBoard::randomFill(short row, short col) {
+void SudokuBoard::randomFill(short &row, short &col) {
     if (row == 9) return;
     short numIndex;
     short val;
 //    bool available[9] = {true};
     std::vector<short> available = {1,2,3,4,5,6,7,8,9};
     std::vector<short>::iterator it;
-    std::random_device rd{};
-    std::mt19937 mt(rd());
-    std::uniform_int_distribution<short> dist(0, 8);
-    numIndex = dist(mt);
-    numIndex = numIndex%available.size();
+    srand(time(nullptr));
+    numIndex = (short) ((rand()>>6)%available.size());
     while(true) {
         if (isOpen(available.at(numIndex), row, col)) {
             val = available.at(numIndex);
             it = available.begin();
             advance(it, numIndex);
             available.erase(it);
-            placeNum(val, row, col++);
+            placeNum(val, row, col);
             print();
-            if (col == 9) {col = 0; row++;};
-            randomFill(row, col);
+            if (!forward(row, col)) return;
+            randomFill(row, col); //square moved forward
             if (row == 9) return;
-            if (available.empty()) return;
-            numIndex = dist(mt);
+            backward(row, col); //return to this location
+            placeNum(0, row, col); //clears this location
+            if (available.empty()) {
+                return;
+            }
             numIndex = numIndex%available.size();
         }
         else {
@@ -157,7 +157,6 @@ void SudokuBoard::randomFill(short row, short col) {
             advance(it, numIndex);
             available.erase(it);
             if (available.empty()) return;
-            numIndex = dist(mt);
             numIndex = numIndex%available.size();
         }
     }
@@ -165,6 +164,39 @@ void SudokuBoard::randomFill(short row, short col) {
 
 
 }
+
+bool SudokuBoard::forward(short &row, short &col) {
+    if (col == 8) {
+        if (row == 8) return false;
+        row++;
+        col = 0;
+        return true;
+    }
+    else {
+        col++;
+        return true;
+    }
+}
+
+bool SudokuBoard::backward(short &row, short &col) {
+    if (col == 0) {
+        if (row == 0) return false;
+        row--;
+        col = 8;
+        return true;
+    }
+    else {
+        col--;
+        return true;
+    }
+}
+
+void SudokuBoard::fillBoard() {
+    short row = 0;
+    short col = 0;
+    randomFill(row, col);
+}
+
 
 
 

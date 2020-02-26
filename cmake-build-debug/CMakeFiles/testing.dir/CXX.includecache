@@ -15,4 +15,10 @@ cfloat
 -
 ctime
 -
+cstdio
+-
+cstdlib
+-
+vector
+-
 

@@ -5,16 +5,22 @@
 #ifndef SUDOKUV2_SUDOKUBOARD_H
 #define SUDOKUV2_SUDOKUBOARD_H
 #include <iostream>
-#include <random>
-#include <cfloat>
+#include <cstdio>
+#include <cstdlib>
 #include <ctime>
+#include <cfloat>
+#include <vector>
+
 
 class SudokuBoard {
     private:
     short board[9][9];
 
     public:
-    void randomFill(short row = 0, short col = 0);
+    bool forward(short &row, short &col);
+    bool backward(short &row, short &col);
+    void fillBoard(void);
+    void randomFill(short &row, short &col);
     bool placeNum(short num, short row, short col);
     bool isOpen(short num, short row, short col);
     bool isPossible(short row, short col);

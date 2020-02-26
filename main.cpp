@@ -13,7 +13,7 @@ int main() {
 //        std::cout << please[i] << ", ";
 //    }
     //std::cout << std::endl;
-    board.randomFill();
+    board.fillBoard();
     board.print();
     return 0;
 }
