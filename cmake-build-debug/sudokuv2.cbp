@@ -127,9 +127,11 @@
 		</Unit>
 		<Unit filename="C:/Users/Cameron/ncsuDrive/Me/Projects/sudokuv2/sudokuBoard.cpp">
 			<Option target="sudokuv2"/>
+			<Option target="testing"/>
 		</Unit>
 		<Unit filename="C:/Users/Cameron/ncsuDrive/Me/Projects/sudokuv2/sudokuBoard.h">
 			<Option target="sudokuv2"/>
+			<Option target="testing"/>
 		</Unit>
 		<Unit filename="C:/Users/Cameron/ncsuDrive/Me/Projects/sudokuv2/testing.cpp">
 			<Option target="testing"/>

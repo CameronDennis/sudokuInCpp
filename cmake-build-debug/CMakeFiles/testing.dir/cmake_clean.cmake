@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/testing.dir/sudokuBoard.cpp.obj"
   "CMakeFiles/testing.dir/testing.cpp.obj"
   "libtesting.dll.a"
   "testing.exe"

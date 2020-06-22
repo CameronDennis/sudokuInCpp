@@ -23,7 +23,6 @@ class SudokuBoard {
     void randomFill(short &row, short &col);
     bool placeNum(short num, short row, short col);
     bool isOpen(short num, short row, short col);
-    bool isPossible(short row, short col);
     SudokuBoard();//default constructor
     void print();
     short *rowGen(short row);

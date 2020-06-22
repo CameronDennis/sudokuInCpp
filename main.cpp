@@ -14,7 +14,7 @@ int main() {
 //    }
     //std::cout << std::endl;
     board.fillBoard();
-    board.print();
+    //board.print();
     return 0;
 }
 
