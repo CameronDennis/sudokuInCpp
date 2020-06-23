@@ -4,13 +4,46 @@
 
 
 #include "sudokuBoard.h"
-
+using namespace std;
 
 bool SudokuBoard::placeNum(short num, short row, short col) {
     if ((row > 8)||(col > 8)|(num > 9)) return false;
     board[row][col] = num;
     return true;
 }
+
+bool SudokuBoard::fillFromFile(const string& name) {
+    ifstream entries;
+    entries.open(name);
+    if (entries.is_open()) {
+        string line;
+        while (getline(entries,line)) {
+            size_t found = line.find("board");//checks for string board
+            if (found != string::npos) { //if board is found
+                short num;
+                short row = 0, col = 0;
+                getline(entries, line); //adds line containing board data to line
+                for (int i = 0; i < 89; i++) {
+                    if (line.at(i) == ' ') i++; //statement ignores spaces
+                    num = ((short) line.at(i)) - 48;
+                    if (num) occupied++;
+                    board[row][col++] = num;//adds entries to board
+                    if (col == 9) {
+                        col = 0;
+                        row++;
+                    }
+                }
+            }
+        }
+        entries.close();
+        return true;
+    }
+    else {
+        cout << "File failed to open." << endl;
+        return false;
+    }
+}
+
 
 SudokuBoard::SudokuBoard() :
 board{
@@ -27,35 +60,35 @@ board{
 void SudokuBoard::print() {
     for (short row = 0; row < 10; row++) {
         if ((row%3 == 0)) {
-            if (row == 0) std::cout << TLCORNER;
-            if ((row == 3)||(row == 6)) std::cout << RMIDDLE;
-            if (row == 9) std::cout << (char) BLCORNER;
+            if (row == 0) cout << TLCORNER;
+            if ((row == 3)||(row == 6)) cout << RMIDDLE;
+            if (row == 9) cout << (char) BLCORNER;
             for (short i = 0; i < 33; i++) {
                 if (((i == 11)||(i == 22))&&(row%9 !=0)) {
-                    std::cout << CROSS;
+                    cout << CROSS;
                 }
                 if (((i == 11)||(i == 22))&&(row == 0)) {
-                    std::cout << TCROSS;
+                    cout << TCROSS;
                 }
                 if (((i == 11)||(i == 23))&&(row == 9)) {
-                    std::cout << BCROSS;
+                    cout << BCROSS;
                 }
-                else std::cout << HLINE;
+                else cout << HLINE;
             }
-            if (row == 0) std::cout << TRCORNER;
-            if ((row == 3)||(row == 6)) std::cout << LMIDDLE;
-            if (row == 9) std::cout << HLINE << HLINE << BRCORNER;
-            std::cout << std::endl;
+            if (row == 0) cout << TRCORNER;
+            if ((row == 3)||(row == 6)) cout << LMIDDLE;
+            if (row == 9) cout << HLINE << HLINE << BRCORNER;
+            cout << endl;
         }
         if (row < 9) {
             for (short col = 0; col < 9; col++) {
-                if (col == 0) std::cout << VLINE;
-                if (board[row][col] == 0) std::cout << "   ";
-                else std::cout << "  " << board[row][col];
-                if ((col+1)%3 == 0)  std::cout << "  " << VLINE;
+                if (col == 0) cout << VLINE;
+                if (board[row][col] == 0) cout << "   ";
+                else cout << "  " << board[row][col];
+                if ((col+1)%3 == 0)  cout << "  " << VLINE;
             }
         }
-            std::cout << std::endl;
+            cout << endl;
     }
 }
 
@@ -118,49 +151,6 @@ short *SudokuBoard::boxGen(short box) {
 
 
 void SudokuBoard::randomFill(short &row, short &col) {
-    if (row == 9) return;
-    short numIndex;
-    short val;
-//    bool available[9] = {true};
-    std::vector<short> available = {1,2,3,4,5,6,7,8,9};
-    std::vector<short>::iterator it;
-    //srand(time(nullptr));
-    numIndex = (short) ((rand()>>6)%available.size());
-    while(true) {
-        short num = available.at(numIndex);
-        if (isOpen(num, row, col)) {
-            val = available.at(numIndex);
-            it = available.begin();
-            advance(it, numIndex);
-            available.erase(it);
-            placeNum(val, row, col);
-            print();
-            if (!forward(row, col)) {
-                return;
-            }
-            randomFill(row, col); //square moved forward
-            if (!forward(row, col)) {
-                print();
-                return;
-            }
-            backward(row, col);
-            backward(row, col); //return to this location
-            placeNum(0, row, col); //clears this location
-            if (available.empty()) {
-                return;
-            }
-            numIndex = (short) ((rand()>>6)%available.size());
-        }
-        else {
-            it = available.begin();
-            advance(it, numIndex);
-            available.erase(it);
-            if (available.empty()) return;
-            numIndex = (short) ((rand()>>6)%available.size());
-        }
-    }
-
-
 
 }
 
@@ -191,11 +181,14 @@ bool SudokuBoard::backward(short &row, short &col) {
 }
 
 void SudokuBoard::fillBoard() {
-    srand(time(nullptr));
-    short row = 0;
-    short col = 0;
-    randomFill(row, col);
+
 }
+
+void SudokuBoard::free() const {
+    cout << occupied << endl;
+}
+
+
 
 
 
@@ -203,7 +196,7 @@ void SudokuBoard::fillBoard() {
 
 /*
 for (int i=0; i<16; ++i) {
-    std::cout << dist(mt) << "\n";
+    cout << dist(mt) << "\n";
 }
 
      for (short row = 0; row < 9; row++) {

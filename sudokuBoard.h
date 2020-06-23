@@ -10,11 +10,15 @@
 #include <ctime>
 #include <cfloat>
 #include <vector>
-
-
+#include <tuple>
+#include <string>
+#include <iostream>
+#include <fstream>
+using namespace std;
 class SudokuBoard {
     private:
     short board[9][9];
+    int occupied {};
 
     public:
     bool forward(short &row, short &col);
@@ -22,9 +26,11 @@ class SudokuBoard {
     void fillBoard(void);
     void randomFill(short &row, short &col);
     bool placeNum(short num, short row, short col);
+    bool fillFromFile(const string& name);
     bool isOpen(short num, short row, short col);
     SudokuBoard();//default constructor
     void print();
+    void free() const;
     short *rowGen(short row);
     short *colGen(short col);
     short *boxGen(short box);

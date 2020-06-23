@@ -29,4 +29,12 @@ cfloat
 -
 vector
 -
+tuple
+-
+string
+-
+iostream
+-
+fstream
+-
 
